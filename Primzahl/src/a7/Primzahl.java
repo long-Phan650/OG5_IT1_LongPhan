@@ -18,7 +18,7 @@ public static void main(String[] args) {
     boolean istPrimzahl = true;
     
             if (x <= 1) {
-        istPrimzahl = false;// pppp
+        istPrimzahl = false;
     } else {
         
         for (long i = 2; i <= x / 2; i++) {
