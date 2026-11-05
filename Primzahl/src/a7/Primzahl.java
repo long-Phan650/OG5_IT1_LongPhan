@@ -38,7 +38,7 @@ public static void main(String[] args) {
     }
         long ende = System.currentTimeMillis();
         System.out.println(ende - anfang +"ms");
-    }
+    }//g
     
 }
 
