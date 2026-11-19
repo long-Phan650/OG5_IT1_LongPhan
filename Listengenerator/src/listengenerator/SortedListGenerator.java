@@ -1,38 +1,76 @@
 package listengenerator;
 
 import java.util.Random;
-
+import java.util.Arrays;
+import java.util.Scanner;
 public class SortedListGenerator {
 
-	public static long[] getSortedList(int laenge){
-		Random rand = new Random(111111);
-		long[] zahlenliste = new long[laenge];
-		long naechsteZahl = 0;
-		
-		for(int i = 0; i < laenge; i++){
-			naechsteZahl += rand.nextInt(3)+1;
-			zahlenliste[i] = naechsteZahl;
-		}
-		
-		return zahlenliste;
-	}
-	
-	public static void main(String[] args){
-		final int ANZAHL = 20000000; //20.000.000
-		
-		long[] a = getSortedList(ANZAHL);
-		long gesuchteZahl = a[ANZAHL-1];
-		
-		long time = System.currentTimeMillis();
-		
-		for(int i = 0; i < a.length; i++)
-			if(a[i] == gesuchteZahl)
-				System.out.println(i);
-		
-		System.out.println(System.currentTimeMillis() - time + "ms");
-		
-		//for(long x: a)
-		//	System.out.println(x);		
-		
-	}
+    public static void main(String[] args) {
+
+        Scanner scanner = new Scanner(System.in);
+
+        // Array mit 20 Millionen Werten erstellen
+        int[] zahlen = new int[20_000_000];
+
+        // Array mit 1, 2, 3, 4, 5, ... füllen
+        for (int i = 0; i < zahlen.length; i++) {
+            zahlen[i] = i + 1;
+        }
+
+        System.out.println("Array wurde erstellt!");
+        System.out.println("Anzahl der Werte: " + zahlen.length);
+        System.out.println("Erster Wert: " + zahlen[0]);
+        System.out.println("Letzter Wert: " + zahlen[zahlen.length - 1]);
+
+        // Zahl eingeben
+        System.out.print("\nWelche Zahl möchtest du suchen? ");
+        int gesucht = scanner.nextInt();
+
+        // Zeitmessung starten
+        long start = System.nanoTime();
+
+        // Binäre Suche
+        int ergebnis = binarySearch(zahlen, gesucht);
+
+        // Zeitmessung beenden
+        long ende = System.nanoTime();
+
+        // Ergebnis ausgeben
+        if (ergebnis != -1) {
+            System.out.println("\nZahl gefunden!");
+            System.out.println("Position im Array: " + ergebnis);
+        } else {
+            System.out.println("\nZahl nicht gefunden!");
+        }
+
+        // Suchzeit in Millisekunden
+        double zeit = (ende - start) / 1_000_000.0;
+
+        System.out.println("Suchzeit: " + zeit + " ms");
+
+        scanner.close();
+    }
+
+    public static int binarySearch(int[] array, int gesucht) {
+
+        int links = 0;
+        int rechts = array.length - 1;
+
+        while (links <= rechts) {
+
+            int mitte = links + (rechts - links) / 2;
+
+            if (array[mitte] == gesucht) {
+                return mitte;
+            }
+
+            if (array[mitte] < gesucht) {
+                links = mitte + 1;
+            } else {
+                rechts = mitte - 1;
+            }
+        }
+
+        return -1;
+    }
 }
